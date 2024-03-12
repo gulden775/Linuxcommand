@@ -1,0 +1,72 @@
+ps afx просмотр запущенных приложений
+
+df -h 
+du -sh /directory
+
+lsblk 
+smartctl  -a /dev/sda
+smartctl -a /dev/nvme1  работает на nvme дисках
+
+iostat 
+iotop
+htop
+free -m
+vmstat
+
+ps aux процессы
+strace -ls
+
+netstat -tulpn
+
+ss -lntu
+
+netstat -rn
+ip r
+
+traceroute 
+mtr
+dig etogeek.dev
+dig @8.8.8.8 etogeek.dev
+
+curl -v telnet://127.0.0.1:22
+curl --unix-socket /var/run/docker.socet
+
+tcpdump -i any port 9100 -nn
+
+taill -f -n50 /var/log/syslog
+
+
+
+
+
+
+
+
+
+
+raid 
+# apt install mdadm
+
+ удалить старые метаданные и подпись на дисках:
+если диски новые и не важны данные
+sudo wipefs --all --force /dev/sd{a,b}
+
+mdadm --zero-superblock --force /dev/sdb
+mdadm: Unrecognised md component device – …“, значит на дисках не было записей о предыдущих RAID, все хорошо.
+
+Для сборки зеркального массива применяем следующую команду:
+
+sudo mdadm --create --verbose /dev/md0 --level=mirror --raid-devices=2 /dev/sd{a,b}
+посмотреть синхронизацию 
+mdadm --zero-superblock /dev/sdf1 /dev/sde1
+
+df -h -x devtmpfs -x tmpfs посмотреть места и точку монтирования
+
+
+Так прокомментировал Redis из config/config.php и перезапустил мой докер-контейнер.
+
+Теперь я мог бы использовать
+
+sudo docker exec -u www-data nextcloud_app_1 php occ files:scan --all
+
+и это сработало (с просмотром ошибок по конкретным файлам).
